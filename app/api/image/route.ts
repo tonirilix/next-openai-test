@@ -8,7 +8,14 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export async function GET() {
-  const response = await openai.listEngines();
-  return NextResponse.json(response.data.data);
+export async function GET(request: Request) {}
+
+export async function POST(request: Request) {
+  const { prompt } = await request.json();
+  const response = await openai.createImage({
+    prompt,
+    n: 1,
+    size: "512x512",
+  });
+  return NextResponse.json({ data: response.data.data });
 }

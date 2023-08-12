@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration, OpenAIApi } from "openai-edge";
 import { env } from "@/env.mjs";
 
 const configuration = new Configuration({
@@ -17,5 +17,6 @@ export async function POST(request: Request) {
     n: 1,
     size: "512x512",
   });
-  return NextResponse.json({ data: response.data.data });
+  const data = await response.json();
+  return NextResponse.json({ data });
 }
